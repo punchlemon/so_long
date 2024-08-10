@@ -77,6 +77,7 @@ int		print_tile(void *tile, int fd, int *res);
 void	enlarge_tiles(t_data *d, int mult);
 
 // event_handler.c
+void	ft_putnbr_fd(int n, int fd);
 void	success(t_data *d);
 int		error(t_data *d, char *str);
 int		close_mlx(t_data *d);
@@ -98,5 +99,8 @@ void	width_chk(t_data *d, t_list *start, t_cordinate *map_size);
 void	surround_one_chk(t_data *d, t_list *start, t_cordinate *map_size);
 void	include_char_chk(t_data *d, t_list *l);
 int		check_file(t_data *d);
+
+// handling_arguments.c
+int	handling_arguments(t_data *d, int argc, char **argv);
 
 #endif
