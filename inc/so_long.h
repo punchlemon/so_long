@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: retanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/10 15:41:15 by retanaka          #+#    #+#             */
+/*   Updated: 2024/08/10 15:41:16 by retanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -20,21 +32,23 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-// debug
-#include <stdio.h>
+# include <stdio.h>
 
-typedef struct s_cordinate {
+typedef struct s_cordinate
+{
 	size_t	x;
 	size_t	y;
 }	t_cordinate;
 
-typedef struct s_map_info {
+typedef struct s_map_info
+{
 	int	p_cnt;
 	int	c_cnt;
 	int	e_cnt;
 }	t_map_info;
 
-typedef struct s_data {
+typedef struct s_data
+{
 	void		*mlx;
 	void		*win;
 	char		*addr;
@@ -48,36 +62,37 @@ typedef struct s_data {
 }	t_data;
 
 // tile.c
-typedef struct s_tile {
+typedef struct s_tile
+{
 	void	*mlx;
 	void	*img;
 	t_item	*file;
 	int		width;
 	int		height;
 }	t_tile;
-t_item	*create_tile(void *, char *, char *);
-void	*delete_tile(void *);
-int		print_tile(void *, int, int *);
+t_item	*create_tile(void *mlx, char *path, char *name);
+void	*delete_tile(void *tile);
+int		print_tile(void *tile, int fd, int *res);
 void	enlarge_tiles(t_data *d, int mult);
 
 // event_handler.c
-int			key_event(int, t_data *);
-int			close_mlx(t_data *);
+int		close_mlx(t_data *d);
+int		key_event(int key, t_data *d);
 
 // flood_fill.c
 void	flood_fill_rec(t_cordinate map_size, int **map, size_t y, size_t x);
 void	get_cordinate(t_data *d, t_cordinate *cord, int i);
-int		flood_fill(t_data	*d);
+int		flood_fill(t_data *d);
 
 // map.c
 void	disp_map(t_data *d);
-int	get_num(char c);
+int		get_num(char c);
 void	set_map(t_data *d, t_list *start);
 
 // map_check.c
-int	width_chk(t_list *start, t_cordinate *map_size);
-int	surround_one_chk(t_list *start, t_cordinate *map_size);
-int	include_char_chk(t_list *l, t_data *d);
-int	check_file(t_item *file, t_data *d);
+int		width_chk(t_list *start, t_cordinate *map_size);
+int		surround_one_chk(t_list *start, t_cordinate *map_size);
+int		include_char_chk(t_list *l, t_data *d);
+int		check_file(t_item *file, t_data *d);
 
 #endif
