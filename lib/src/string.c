@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: retanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/10 16:03:00 by retanaka          #+#    #+#             */
+/*   Updated: 2024/08/10 16:03:00 by retanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include <unistd.h>
 
@@ -55,26 +67,6 @@ t_item	*append_string_src(t_item *str_item, char *src)
 	return (str_item);
 }
 
-t_item	*append_string(t_item *str_item, t_item *src_item)
-{
-	t_string	*str;
-	t_string	*src;
-	size_t		str_len;
-	size_t		src_len;
-
-	str = (t_string *)str_item->addr;
-	src = (t_string *)src_item->addr;
-	str_len = str->len;
-	src_len = src->len;
-	if (src_len == 0)
-		return (str_item);
-	if (update_cap(str_len + src_len, &str->cap))
-		update_string(str_item, 1);
-	ft_memcpy(str->str + str_len, src->str, src_len);
-	str->len += src_len;
-	return (delete(src_item), str_item);
-}
-
 int	print_string(void *s, int fd, int *res)
 {
 	int			tmp;
@@ -112,3 +104,23 @@ int	print_string_only(void *s, int fd, int *res)
 	*res += tmp;
 	return (*res);
 }
+
+// t_item	*append_string(t_item *str_item, t_item *src_item)
+// {
+// 	t_string	*str;
+// 	t_string	*src;
+// 	size_t		str_len;
+// 	size_t		src_len;
+
+// 	str = (t_string *)str_item->addr;
+// 	src = (t_string *)src_item->addr;
+// 	str_len = str->len;
+// 	src_len = src->len;
+// 	if (src_len == 0)
+// 		return (str_item);
+// 	if (update_cap(str_len + src_len, &str->cap))
+// 		update_string(str_item, 1);
+// 	ft_memcpy(str->str + str_len, src->str, src_len);
+// 	str->len += src_len;
+// 	return (delete(src_item), str_item);
+// }

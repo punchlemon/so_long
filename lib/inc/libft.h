@@ -44,9 +44,9 @@ typedef struct s_string
 t_item	*create_string(char *src);
 void	*delete_string(void *s);
 t_item	*append_string_src(t_item *str_item, char *src);
-t_item	*append_string(t_item *str_item, t_item *src_item);
 int		print_string(void *s, int fd, int *res);
 int		print_string_only(void *s, int fd, int *res);
+// t_item	*append_string(t_item *str_item, t_item *src_item);
 
 // array.c
 typedef struct s_array
