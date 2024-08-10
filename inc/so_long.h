@@ -64,4 +64,20 @@ void	enlarge_tiles(t_data *d, int mult);
 int			key_event(int, t_data *);
 int			close_mlx(t_data *);
 
+// flood_fill.c
+void	flood_fill_rec(t_cordinate map_size, int **map, size_t y, size_t x);
+void	get_cordinate(t_data *d, t_cordinate *cord, int i);
+int		flood_fill(t_data	*d);
+
+// map.c
+void	disp_map(t_data *d);
+int	get_num(char c);
+void	set_map(t_data *d, t_list *start);
+
+// map_check.c
+int	width_chk(t_list *start, t_cordinate *map_size);
+int	surround_one_chk(t_list *start, t_cordinate *map_size);
+int	include_char_chk(t_list *l, t_data *d);
+int	check_file(t_item *file, t_data *d);
+
 #endif

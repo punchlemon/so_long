@@ -8,6 +8,9 @@ LIB_DIR				=	lib
 FILES				=	 \
 						main \
 						event_handler \
+						flood_fill \
+						map_check \
+						map \
 						tile \
 
 CC					=	gcc

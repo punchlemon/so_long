@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tile.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: retanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/10 15:27:16 by retanaka          #+#    #+#             */
+/*   Updated: 2024/08/10 15:27:17 by retanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void	*delete_tile(void *tile)
@@ -52,37 +64,32 @@ int	print_tile(void *tile, int fd, int *res)
 	return (*res);
 }
 
-void	fill(int *new_data, int new_width, int pixel, int mult)
+void	enlarge_img(t_tile *t, void *new_img, unsigned int m)
 {
-	int	y;
-	int	x;
+	int			w;
+	t_cordinate	c;
+	t_cordinate	c2;
+	int			*new;
+	int			*old;
 
-	y = -1;
-	while (++y < mult)
+	new = (int *)mlx_get_data_addr(new_img, &w, &w, &w);
+	old = (int *)mlx_get_data_addr(t->img, &w, &w, &w);
+	w = t->width * m;
+	c.y = -1;
+	while (++c.y < (unsigned int)t->height)
 	{
-		x = -1;
-		while (++x < mult)
-			new_data[y * new_width + x] = pixel;
-	}
-}
-
-void	enlarge_img(t_tile *t, void *new_img, int m)
-{
-	int	t_w;
-	int	x;
-	int	y;
-	int	*new;
-	int	*old;
-
-	t_w = t->width;
-	new = (int *)mlx_get_data_addr(new_img, &x, &x, &x);
-	old = (int *)mlx_get_data_addr(t->img, &x, &x, &x);
-	y = -1;
-	while (++y < t->height)
-	{
-		x = -1;
-		while (++x < t_w)
-			fill(new + (y * t_w * m + x) * m, t_w * m, old[y * t_w + x], m);
+		c.x = -1;
+		while (++c.x < (unsigned int)t->width)
+		{
+			c2.y = -1;
+			while (++c2.y < m)
+			{
+				c2.x = -1;
+				while (++c2.x < m)
+					(new + (c.y * w + c.x) * m)[c2.y * w + c2.x]
+						= old[c.y * t->width + c.x];
+			}
+		}
 	}
 }
 
