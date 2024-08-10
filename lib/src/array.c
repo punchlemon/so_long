@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   array.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: retanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/10 15:57:11 by retanaka          #+#    #+#             */
+/*   Updated: 2024/08/10 15:57:12 by retanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 t_item	*create_array(size_t size, void *(*delete)(void *),
@@ -12,8 +24,6 @@ t_item	*create_array(size_t size, void *(*delete)(void *),
 	a = malloc(sizeof(t_array));
 	if (!a)
 		return (free(res), NULL);
-	// res->print = print_array;
-	// res->delete = delete_array;
 	res->addr = a;
 	a->p = NULL;
 	a->delete = delete;
