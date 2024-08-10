@@ -14,11 +14,15 @@
 
 int	close_mlx(t_data *d)
 {
-	int	i;
+	size_t	i;
 
 	i = -1;
 	while (++i < 5)
 		delete(d->tiles[i]);
+	i = -1;
+	while (++i < d->map_size.y)
+		free(d->map[i]);
+	free(d->map);
 	free(d->tiles);
 	mlx_loop_end(d->mlx);
 	if (d->win)
