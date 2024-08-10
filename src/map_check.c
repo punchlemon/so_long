@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	width_chk(t_data * d, t_list *start, t_cordinate *map_size)
+void	width_chk(t_data *d, t_list *start, t_cordinate *map_size)
 {
 	t_list		*l;
 	t_string	*s;

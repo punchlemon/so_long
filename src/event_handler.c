@@ -49,15 +49,6 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 }
 
-void	status(t_data *d)
-{
-	write(1, "move = ", 7);
-	ft_putnbr_fd(d->player_move, 1);
-	write(1, ",\tpoint = ", 10);
-	ft_putnbr_fd(d->get_coin, 1);
-	write(1, "\n", 1);
-}
-
 int	close_mlx(t_data *d)
 {
 	size_t	i;
@@ -84,8 +75,8 @@ int	key_event(int key, t_data *d)
 {
 	if (key == ESC)
 		return (close_mlx(d), exit(0), 0);
-	if (key == UP || key == UP_W || key == DOWN || key == DOWN_S ||
-		key == LEFT || key == LEFT_A || key == RIGHT || key == RIGHT_D)
+	if (key == UP || key == UP_W || key == DOWN || key == DOWN_S
+		|| key == LEFT || key == LEFT_A || key == RIGHT || key == RIGHT_D)
 		update_map(d, key);
 	return (0);
 }

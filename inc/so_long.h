@@ -33,7 +33,6 @@
 # include <limits.h>
 # include <unistd.h>
 
-
 typedef struct s_cordinate
 {
 	size_t	y;
@@ -82,7 +81,6 @@ void	success(t_data *d);
 int		error(t_data *d, char *str);
 int		close_mlx(t_data *d);
 int		key_event(int key, t_data *d);
-void	status(t_data *d);
 
 // flood_fill.c
 int		flood_fill_rec(t_cordinate map_size, int **map, size_t y, size_t x);

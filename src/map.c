@@ -74,6 +74,15 @@ void	set_map(t_data *d, t_list *start)
 	}
 }
 
+void	status(t_data *d)
+{
+	write(1, "move = ", 7);
+	ft_putnbr_fd(d->player_move, 1);
+	write(1, ",\tpoint = ", 10);
+	ft_putnbr_fd(d->get_coin, 1);
+	write(1, "\n", 1);
+}
+
 void	update_map(t_data *d, int key)
 {
 	t_cordinate	cord;
