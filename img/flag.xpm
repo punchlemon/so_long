@@ -1,0 +1,23 @@
+/* XPM */
+static char *flag_xpm[] = {
+"16 16 3 1",
+"  c #73CB67",
+". c #86A4CA",
+"X c white",
+"XXXXXXXXXXXXXXXX",
+".XXXXXXXX     XX",
+"..XXXXXX  X X  X",
+"...XXXXX XX XX X",
+"....XXXX X   X X",
+".....XXX   X   X",
+"......XX       X",
+".......XXX   XXX",
+"........XXXXXXXX",
+".........XXXXXXX",
+"..........XXXXXX",
+"...........XXXXX",
+"............XXXX",
+".............XXX",
+"..............XX",
+"...............X"
+};

@@ -3,39 +3,36 @@
 
 # define ESC 65307
 
-# include "ft_lib.h"
+# include "libft.h"
 # include <mlx.h>
 # include <stdlib.h>
-
-typedef struct s_tile {
-	void		*img;
-	t_string	*path;
-	t_string	*name;
-	int			width;
-	int			height;
-}	t_tile;
 
 typedef struct s_data {
 	void	*mlx;
 	void	*win;
 	char	*addr;
-	t_tile	*tile;
-	int		bpp;
-	int		line_length;
-	int		endian;
+	t_item	**tiles;
 	int		width;
 	int		height;
+	t_item	*ber;
+	int		**map;
 }	t_data;
+
+// tile.c
+typedef struct s_tile {
+	void	*mlx;
+	void	*img;
+	t_item	*file;
+	int		width;
+	int		height;
+}	t_tile;
+t_item	*create_tile(void *, char *, char *);
+void	*delete_tile(void *);
+int		print_tile(void *, int, int *);
+void	enlarge_tiles(t_data *d, int mult);
 
 // event_handler.c
 int			key_event(int, t_data *);
 int			close_mlx(t_data *);
-
-// get_next_line.c
-char		*get_next_line(int);
-
-// tile.c
-t_tile		*create_tile(void *, char *, char *);
-void		delete_tile(void *, t_tile *);
 
 #endif

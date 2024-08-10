@@ -1,6 +1,6 @@
-#include "ft_lib.h"
+#include "libft.h"
 
-t_item	*create_item(void *addr, void *(*delete)(t_item *), int (*print)(t_item *, int, int *))
+t_item	*create_item(void *addr, void *(*delete)(void *), int (*print)(void *, int, int *))
 {
 	t_item	*res;
 
@@ -15,7 +15,7 @@ t_item	*create_item(void *addr, void *(*delete)(t_item *), int (*print)(t_item *
 	return (res);
 }
 
-void	*delete_item(t_item *item)
+void	*delete(t_item *item)
 {
 	t_item	*res;
 	t_item	*i;
@@ -28,13 +28,13 @@ void	*delete_item(t_item *item)
 	return (res);
 }
 
-int	print_item(t_item *item, int fd, int *res)
+int	print(t_item *item, int fd, int *res)
 {
 	char	*c;
 
 	if (!item)
 		c = "item=NULL";
-	else if (!item->print)
+	else if (!(item->print))
 		c = "item->print=NULL";
 	else
 		return (item->print(item->addr, fd, res));

@@ -1,5 +1,5 @@
+#include "libft.h"
 #include <unistd.h>
-#include "ft_lib.h"
 
 t_item	*create_string(char *src)
 {
@@ -25,16 +25,13 @@ t_item	*create_string(char *src)
 	return (res);
 }
 
-void	*delete_string(t_item *i)
+void	*delete_string(void *s)
 {
-	t_string	*str;
-
-	str = (t_string *)i->addr;
-	if (!str)
+	if (!s)
 		return (NULL);
-	if (((t_string *)str)->str)
-		free(((t_string *)str)->str);
-	free(str);
+	if (((t_string *)s)->str)
+		free(((t_string *)s)->str);
+	free(s);
 	return (NULL);
 }
 
@@ -75,22 +72,43 @@ t_item	*append_string(t_item *str_item, t_item *src_item)
 		update_string(str_item, 1);
 	ft_memcpy(str->str + str_len, src->str, src_len);
 	str->len += src_len;
-	return (delete_item(src_item), str_item);
+	return (delete(src_item), str_item);
 }
 
-int	print_string(t_item *i, int fd, int *res)
+int	print_string(void *s, int fd, int *res)
 {
 	int			tmp;
-	t_string	*s;
 
-	if (!res || !i)
+	if (!res || !s)
 		return (0);
-	s = (t_string *)i->addr;
-	if (!s->str)
+	if (!s)
 		return (0);
-	tmp = write(fd, s->str, s->len);
+	if (!((t_string *)s)->str)
+		return (0);
+	tmp = write(fd, ((t_string *)s)->str, ((t_string *)s)->len);
 	if (tmp == -1)
 		return (*res = -1, -1);
-	*res = tmp;
+	*res += tmp;
+	tmp = write(fd, "\n", 1);
+	if (tmp == -1)
+		return (*res = -1, -1);
+	*res += tmp;
+	return (*res);
+}
+
+int	print_string_only(void *s, int fd, int *res)
+{
+	int			tmp;
+
+	if (!res || !s)
+		return (0);
+	if (!s)
+		return (0);
+	if (!((t_string *)s)->str)
+		return (0);
+	tmp = write(fd, ((t_string *)s)->str, ((t_string *)s)->len);
+	if (tmp == -1)
+		return (*res = -1, -1);
+	*res += tmp;
 	return (*res);
 }

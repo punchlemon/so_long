@@ -14,7 +14,12 @@
 
 int	close_mlx(t_data *d)
 {
-	// delete_tile(d->mlx, d->tile);
+	int	i;
+
+	i = -1;
+	while (++i < 5)
+		delete(d->tiles[i]);
+	free(d->tiles);
 	mlx_loop_end(d->mlx);
 	if (d->win)
 		mlx_destroy_window(d->mlx, d->win);

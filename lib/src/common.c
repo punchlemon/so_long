@@ -1,4 +1,4 @@
-#include "ft_lib.h"
+#include "libft.h"
 #include <unistd.h>
 
 size_t	ft_strlen(const char *s)
@@ -58,7 +58,7 @@ t_item	*update_string(t_item *str_item, int mode)
 	tmp = str->str;
 	str->str = malloc(sizeof(char) * str->cap);
 	if (!str->str)
-		return (str->str = tmp, delete_item(str_item));
+		return (delete(str_item));
 	ft_memcpy(str->str, tmp, str->len);
 	if (mode == 1)
 		free(tmp);

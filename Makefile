@@ -1,49 +1,58 @@
-NAME								=	so_long
-INC_DIR								=	inc
-SRC_DIR								=	src
-OBJ_DIR								=	obj
+NAME				=	so_long
+LIB					=	ft
+INC_DIR				=	inc
+SRC_DIR				=	src
+OBJ_DIR				=	obj
+LIB_DIR				=	lib
 
-FILES								=	 \
-										event_handler \
-										file \
-										ft_common \
-										ft_item \
-										ft_list \
-										ft_string \
-										get_next_line \
-										main \
-										# tile \
+FILES				=	 \
+						main \
+						event_handler \
+						tile \
 
-CC									=	gcc
-XFLAGS								=	-Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -ljpeg -O3
-CFLAGS								=	-Wall -Werror -Wextra -g
-IFLAGS								=	-I$(INC_DIR) -Imlx -I/usr/include
+CC					=	gcc
+XFLAGS				=	-Lmlx -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -O3
+CFLAGS				=	-Wall -Werror -Wextra -g
+IFLAGS				=	-I$(INC_DIR) -Imlx -I/usr/include -I$(LIB_DIR)/$(INC_DIR)
+LFLAGS				=	-L$(LIB_DIR) -l$(LIB)
+VFLAGS				=	 \
+						--track-origins=yes \
+						--leak-check=full \
+						# --show-leak-kinds=all \
+						-s \
 
-OBJ_EXIST							=	.obj
+LOGFILE				=	valgrind_result.log
 
-SRCS								=	$(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
-OBJS								=	$(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
+OBJ_EXIST			=	.obj
 
-$(OBJ_DIR)/%.o:							$(SRC_DIR)/%.c | $(OBJ_EXIST)
-										@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+SRCS				=	$(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
+OBJS				=	$(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
+
+$(OBJ_DIR)/%.o:			$(SRC_DIR)/%.c | $(OBJ_EXIST)
+						@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(OBJ_EXIST):
-										@mkdir -p $(OBJ_DIR)
+						@mkdir -p $(OBJ_DIR)
 
-val:									re
-										@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) > valgrind_result.log 2>&1
+all:					$(NAME)
 
-all:									$(NAME)
+val:					re
+						@valgrind $(VFLAGS) ./$(NAME) > $(LOGFILE) 2>&1
 
-$(NAME):								$(OBJS)
-										@$(CC) $(OBJS) $(CFLAGS) $(IFLAGS) $(XFLAGS) -o $(NAME)
+$(NAME):				$(OBJS)
+						@make all --no-print-directory -C $(LIB_DIR)
+						@$(CC) $(OBJS) $(LFLAGS) $(XFLAGS) -o $(NAME)
 
-clean:
-										@$(RM) -rf $(OBJ_DIR)
+lib_clean:
+						@make clean --no-print-directory -C $(LIB_DIR)
 
-fclean:									clean
-										@$(RM) $(NAME)
+clean:					lib_clean
+						@$(RM) -rf $(OBJ_DIR)
 
-re:										fclean all
+fclean:					clean
+						@$(RM) $(NAME)
+						@$(RM) $(LOGFILE)
 
-.PHONY:									all clean fclean re
+re:						fclean all
+
+.PHONY:					all clean fclean re
