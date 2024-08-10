@@ -45,7 +45,7 @@ void	data_init(t_data *d)
 	d->get_coin = 0;
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_data		d;
 	int			mult;
@@ -54,7 +54,7 @@ int	main(void)
 	d.mlx = mlx_init();
 	mult = 3;
 	set_img(&d, mult);
-	d.ber = create_file("maps/test.ber", "test");
+	handling_arguments(&d, argc, argv);
 	if (check_file(&d))
 		return (close_mlx(&d), 0);
 	d.width = d.map_size.x * mult * 16;

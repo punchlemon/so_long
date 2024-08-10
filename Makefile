@@ -9,6 +9,7 @@ FILES				=	 \
 						main \
 						event_handler \
 						flood_fill \
+						handling_arguments \
 						map_check \
 						map \
 						tile \
