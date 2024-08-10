@@ -59,4 +59,7 @@ fclean:					clean
 
 re:						fclean all
 
-.PHONY:					all clean fclean re
+norm:
+						@norminette inc src lib | grep KO | wc -l
+
+.PHONY:					all clean fclean re norm
