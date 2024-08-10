@@ -4,6 +4,15 @@
 
 int	print_file_contents(void *lines, int fd, int *res);
 
+void	trim_string(t_item *item)
+{
+	t_string	*str;
+
+	str = (t_string *)(item->addr);
+	if (str->str[str->len - 1] == '\n')
+		str->len--;
+}
+
 void	*read_file(int fd, t_item *lines, int *line_num)
 {
 	char	*tmp;
@@ -23,6 +32,7 @@ void	*read_file(int fd, t_item *lines, int *line_num)
 		free(tmp);
 		if (!str)
 			return (NULL);
+		trim_string(str);
 		str->print = print_string_only;
 		append_list(lines, str);
 		(*line_num)++;
