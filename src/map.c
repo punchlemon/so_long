@@ -73,3 +73,28 @@ void	set_map(t_data *d, t_list *start)
 		}
 	}
 }
+
+void	update_map(t_data *d, int key)
+{
+	t_cordinate	cord;
+	t_cordinate	c;
+
+	get_cordinate(d, &cord, P);
+	c.y = 0;
+	c.x = 0;
+	if (key == UP || key == UP_W)
+		c.y = -1;
+	else if (key == DOWN || key == DOWN_S)
+		c.y = 1;
+	else if (key == LEFT || key == LEFT_A)
+		c.x = -1;
+	else if (key == RIGHT || key == RIGHT_D)
+		c.x = 1;
+	if (d->map[cord.y + c.y][cord.x + c.x] == 1)
+		return ;
+	if (d->map[cord.y + c.y][cord.x + c.x] == E)
+		success(d);
+	d->map[cord.y][cord.x] = 0;
+	d->map[cord.y + c.y][cord.x + c.x] = P;
+	disp_map(d);
+}

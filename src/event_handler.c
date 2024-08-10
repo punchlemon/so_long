@@ -12,6 +12,13 @@
 
 #include "so_long.h"
 
+void	success(t_data *d)
+{
+	write(1, "You did it!\n", 12);
+	close_mlx(d);
+	exit(0);
+}
+
 int	error(t_data *d, char *str)
 {
 	write(2, "Error\n", 6);
@@ -48,5 +55,10 @@ int	key_event(int key, t_data *d)
 {
 	if (key == ESC)
 		return (close_mlx(d), exit(0), 0);
+	if (key == UP || key == UP_W || key == DOWN || key == DOWN_S ||
+		key == LEFT || key == LEFT_A || key == RIGHT || key == RIGHT_D)
+	{
+		update_map(d, key);
+	}
 	return (0);
 }

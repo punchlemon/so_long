@@ -76,6 +76,7 @@ int		print_tile(void *tile, int fd, int *res);
 void	enlarge_tiles(t_data *d, int mult);
 
 // event_handler.c
+void	success(t_data *d);
 int		error(t_data *d, char *str);
 int		close_mlx(t_data *d);
 int		key_event(int key, t_data *d);
@@ -89,6 +90,7 @@ void	flood_fill(t_data *d);
 void	disp_map(t_data *d);
 int		get_num(char c);
 void	set_map(t_data *d, t_list *start);
+void	update_map(t_data *d, int key);
 
 // map_check.c
 void	width_chk(t_data *d, t_list *start, t_cordinate *map_size);

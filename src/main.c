@@ -50,7 +50,7 @@ int	main(void)
 
 	data_init(&d);
 	d.mlx = mlx_init();
-	mult = 5;
+	mult = 10;
 	set_img(&d, mult);
 	d.ber = create_file("test.ber", "test");
 	if (check_file(&d))
