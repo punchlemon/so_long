@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-int	width_chk(t_list *start, t_cordinate *map_size)
+void	width_chk(t_data * d, t_list *start, t_cordinate *map_size)
 {
 	t_list		*l;
 	t_string	*s;
@@ -22,19 +22,18 @@ int	width_chk(t_list *start, t_cordinate *map_size)
 	s = (t_string *)(l->item->addr);
 	map_size->x = s->len;
 	if (map_size->x < 3)
-		return (1);
+		error(d, "The map width is too short.");
 	i = 0;
 	while (++i < map_size->y)
 	{
 		l = l->next;
 		s = (t_string *)(l->item->addr);
 		if (map_size->x != s->len)
-			return (1);
+			error(d, "The map is not rectangular.");
 	}
-	return (0);
 }
 
-int	surround_one_chk(t_list *start, t_cordinate *map_size)
+void	surround_one_chk(t_data *d, t_list *start, t_cordinate *map_size)
 {
 	t_list		*l;
 	t_string	*s;
@@ -45,23 +44,22 @@ int	surround_one_chk(t_list *start, t_cordinate *map_size)
 	i = -1;
 	while (++i < map_size->x)
 		if (s->str[i] != '1')
-			return (1);
+			error(d, "The map is not surrounded by '1'.");
 	i = 0;
 	while (++i < map_size->y)
 	{
 		l = l->next;
 		s = (t_string *)(l->item->addr);
 		if (s->str[0] != '1' || s->str[s->len - 1] != '1')
-			return (1);
+			error(d, "The map is not surrounded by '1'.");
 	}
 	i = -1;
 	while (++i < map_size->x)
 		if (s->str[i] != '1')
-			return (1);
-	return (0);
+			error(d, "The map is not surrounded by '1'.");
 }
 
-int	include_char_chk(t_list *l, t_data *d)
+void	include_char_chk(t_data *d, t_list *l)
 {
 	t_cordinate	cord;
 	char		c;
@@ -79,33 +77,35 @@ int	include_char_chk(t_list *l, t_data *d)
 			d->map_inf.e_cnt += (c == 'E');
 			d->map_inf.p_cnt += (c == 'P');
 			if (c != '0' && c != '1' && c != 'C' && c != 'E' && c != 'P')
-				return (1);
+				error(d, "The map contains incorrect letter.");
 		}
 	}
-	if (d->map_inf.c_cnt < 1 || d->map_inf.e_cnt != 1 || d->map_inf.p_cnt != 1)
-		return (1);
-	return (0);
+	if (d->map_inf.c_cnt < 1)
+		error(d, "The map doesn't contain 'C'.");
+	if (d->map_inf.e_cnt != 1)
+		error(d, "The map doesn't contain one 'E'.");
+	if (d->map_inf.p_cnt != 1)
+		error(d, "The map doesn't contain one 'P'.");
 }
 
-int	check_file(t_item *file, t_data *d)
+int	check_file(t_data *d)
 {
 	t_file		*f;
 	t_list		*l;
 
-	if (!file)
-		return (1);
-	f = (t_file *)(file->addr);
+	if (!d->ber)
+		return (error(d, "The file can't open."));
+	f = (t_file *)(d->ber->addr);
 	if (!f->lines)
-		return (1);
+		return (error(d, "The file can't get line."));
 	d->map_size.y = f->line_num;
 	if (d->map_size.y < 3)
-		return (1);
+		return (error(d, "The map height is too short."));
 	l = ((t_list *)(f->lines->addr))->next;
-	if (width_chk(l, &d->map_size) || surround_one_chk(l, &d->map_size)
-		|| include_char_chk(l, d))
-		return (1);
+	width_chk(d, l, &d->map_size);
+	surround_one_chk(d, l, &d->map_size);
+	include_char_chk(d, l);
 	set_map(d, l);
-	if (flood_fill(d))
-		return (1);
+	flood_fill(d);
 	return (0);
 }

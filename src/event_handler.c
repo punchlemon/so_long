@@ -12,6 +12,16 @@
 
 #include "so_long.h"
 
+int	error(t_data *d, char *str)
+{
+	write(2, "Error\n", 6);
+	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
+	close_mlx(d);
+	exit(1);
+	return (1);
+}
+
 int	close_mlx(t_data *d)
 {
 	size_t	i;
@@ -20,20 +30,23 @@ int	close_mlx(t_data *d)
 	while (++i < 5)
 		delete(d->tiles[i]);
 	i = -1;
-	while (++i < d->map_size.y)
-		free(d->map[i]);
-	free(d->map);
+	if (d->map)
+	{
+		while (++i < d->map_size.y)
+			if (d->map[i])
+				free(d->map[i]);
+		free(d->map);
+	}
 	free(d->tiles);
 	mlx_loop_end(d->mlx);
 	if (d->win)
 		mlx_destroy_window(d->mlx, d->win);
-	exit(0);
 	return (0);
 }
 
 int	key_event(int key, t_data *d)
 {
 	if (key == ESC)
-		close_mlx(d);
+		return (close_mlx(d), exit(0), 0);
 	return (0);
 }

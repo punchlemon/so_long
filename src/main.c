@@ -26,20 +26,35 @@ int	set_img(t_data *d, int mult)
 	return (0);
 }
 
+void	data_init(t_data *d)
+{
+	d->mlx = NULL;
+	d->win = NULL;
+	d->addr = NULL;
+	d->tiles = NULL;
+	d->width = 0;
+	d->height = 0;
+	d->ber = NULL;
+	d->map = NULL;
+	d->map_size.y = 0;
+	d->map_size.x = 0;
+	d->map_inf.p_cnt = 0;
+	d->map_inf.c_cnt = 0;
+	d->map_inf.e_cnt = 0;
+}
+
 int	main(void)
 {
 	t_data		d;
 	int			mult;
 
+	data_init(&d);
 	d.mlx = mlx_init();
-	d.map_inf.c_cnt = 0;
-	d.map_inf.p_cnt = 0;
-	d.map_inf.e_cnt = 0;
 	mult = 5;
 	set_img(&d, mult);
 	d.ber = create_file("test.ber", "test");
-	if (check_file(d.ber, &d))
-		return (write(1, "file error\n", 11), close_mlx(&d), 0);
+	if (check_file(&d))
+		return (close_mlx(&d), 0);
 	d.width = d.map_size.x * mult * 16;
 	d.height = d.map_size.y * mult * 16;
 	d.win = mlx_new_window(d.mlx, d.width, d.height, "So_long");
