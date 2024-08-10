@@ -6,6 +6,7 @@ OBJ_DIR				=	obj
 FILES				=	 \
 						common \
 						file \
+						print_file \
 						get_next_line \
 						item \
 						list \
