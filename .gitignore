@@ -1,0 +1,4 @@
+*.a
+*.o
+so_long
+valgrind_result.log
