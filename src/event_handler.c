@@ -29,6 +29,35 @@ int	error(t_data *d, char *str)
 	return (1);
 }
 
+void	ft_putnbr_fd(int n, int fd)
+{
+	char	ones_place;
+
+	if (n == INT_MIN)
+		write(fd, "-2147483648", 11);
+	else if (n == 0)
+		write(fd, "0", 1);
+	else
+	{
+		if (n < 0)
+			n = ~n + write(fd, "-", 1);
+		ones_place = (n % 10) + '0';
+		n /= 10;
+		if (n > 0)
+			ft_putnbr_fd(n, fd);
+		write (fd, &ones_place, 1);
+	}
+}
+
+void	status(t_data *d)
+{
+	write(1, "move = ", 7);
+	ft_putnbr_fd(d->player_move, 1);
+	write(1, ",\tpoint = ", 10);
+	ft_putnbr_fd(d->get_coin, 1);
+	write(1, "\n", 1);
+}
+
 int	close_mlx(t_data *d)
 {
 	size_t	i;
@@ -36,6 +65,7 @@ int	close_mlx(t_data *d)
 	i = -1;
 	while (++i < 5)
 		delete(d->tiles[i]);
+	free(d->tiles);
 	i = -1;
 	if (d->map)
 	{
@@ -44,7 +74,6 @@ int	close_mlx(t_data *d)
 				free(d->map[i]);
 		free(d->map);
 	}
-	free(d->tiles);
 	mlx_loop_end(d->mlx);
 	if (d->win)
 		mlx_destroy_window(d->mlx, d->win);
@@ -57,8 +86,6 @@ int	key_event(int key, t_data *d)
 		return (close_mlx(d), exit(0), 0);
 	if (key == UP || key == UP_W || key == DOWN || key == DOWN_S ||
 		key == LEFT || key == LEFT_A || key == RIGHT || key == RIGHT_D)
-	{
 		update_map(d, key);
-	}
 	return (0);
 }

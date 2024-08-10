@@ -14,14 +14,14 @@
 
 int	set_img(t_data *d, int mult)
 {
-	d->tiles = malloc(sizeof(t_tile *) * mult);
+	d->tiles = malloc(sizeof(t_tile *) * 5);
 	if (!d->tiles)
 		return (close_mlx(d));
-	d->tiles[0] = create_tile(d->mlx, "img/sky.xpm", "sky");
-	d->tiles[1] = create_tile(d->mlx, "img/renga.xpm", "renga");
-	d->tiles[2] = create_tile(d->mlx, "img/coin.xpm", "coin");
-	d->tiles[3] = create_tile(d->mlx, "img/flag.xpm", "flag");
-	d->tiles[4] = create_tile(d->mlx, "img/mario.xpm", "mario");
+	d->tiles[0] = create_tile(d->mlx, "texture/sky.xpm", "sky");
+	d->tiles[1] = create_tile(d->mlx, "texture/renga.xpm", "renga");
+	d->tiles[2] = create_tile(d->mlx, "texture/coin.xpm", "coin");
+	d->tiles[3] = create_tile(d->mlx, "texture/flag.xpm", "flag");
+	d->tiles[4] = create_tile(d->mlx, "texture/mario.xpm", "mario");
 	enlarge_tiles(d, mult);
 	return (0);
 }
@@ -41,6 +41,8 @@ void	data_init(t_data *d)
 	d->map_inf.p_cnt = 0;
 	d->map_inf.c_cnt = 0;
 	d->map_inf.e_cnt = 0;
+	d->player_move = 0;
+	d->get_coin = 0;
 }
 
 int	main(void)
@@ -50,9 +52,9 @@ int	main(void)
 
 	data_init(&d);
 	d.mlx = mlx_init();
-	mult = 10;
+	mult = 3;
 	set_img(&d, mult);
-	d.ber = create_file("test.ber", "test");
+	d.ber = create_file("maps/test.ber", "test");
 	if (check_file(&d))
 		return (close_mlx(&d), 0);
 	d.width = d.map_size.x * mult * 16;

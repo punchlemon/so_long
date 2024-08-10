@@ -30,9 +30,9 @@
 # include "libft.h"
 # include <mlx.h>
 # include <stdlib.h>
+# include <limits.h>
 # include <unistd.h>
 
-# include <stdio.h>
 
 typedef struct s_cordinate
 {
@@ -59,6 +59,8 @@ typedef struct s_data
 	int			**map;
 	t_cordinate	map_size;
 	t_map_info	map_inf;
+	int			player_move;
+	int			get_coin;
 }	t_data;
 
 // tile.c
@@ -80,6 +82,7 @@ void	success(t_data *d);
 int		error(t_data *d, char *str);
 int		close_mlx(t_data *d);
 int		key_event(int key, t_data *d);
+void	status(t_data *d);
 
 // flood_fill.c
 int		flood_fill_rec(t_cordinate map_size, int **map, size_t y, size_t x);

@@ -92,6 +92,10 @@ void	update_map(t_data *d, int key)
 		c.x = 1;
 	if (d->map[cord.y + c.y][cord.x + c.x] == 1)
 		return ;
+	d->player_move++;
+	if (d->map[cord.y + c.y][cord.x + c.x] == C)
+		d->get_coin++;
+	status(d);
 	if (d->map[cord.y + c.y][cord.x + c.x] == E)
 		success(d);
 	d->map[cord.y][cord.x] = 0;
