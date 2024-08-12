@@ -26,8 +26,6 @@ int	ft_strcmpare(char *s1, char *s2)
 	return (0);
 }
 
-#include <stdio.h>
-
 char	*join_str(char *s1, char *s2)
 {
 	size_t	s1_len;

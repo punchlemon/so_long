@@ -60,6 +60,16 @@ fclean:					clean
 re:						fclean all
 
 norm:
-						@norminette inc src lib | grep KO | wc -l
+					@$(call check_norminette, $(SRC_DIR))
+					@$(call check_norminette, $(INC_DIR))
+					@$(call check_norminette, $(LIB_DIR))
+
+define check_norminette
+					@if norminette $1 | grep -q Error!; then \
+						norminette $1 | grep Error! | sed -E 's/^[^\\]*\\([^\\]*)\\.*(.{7})/\1\2/'; \
+					else \
+						echo "$1: OK!"; \
+					fi
+endef
 
 .PHONY:					all clean fclean re norm

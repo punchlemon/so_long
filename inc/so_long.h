@@ -101,6 +101,6 @@ void	include_char_chk(t_data *d, t_list *l);
 int		check_file(t_data *d);
 
 // handling_arguments.c
-int	handling_arguments(t_data *d, int argc, char **argv);
+int		handling_arguments(t_data *d, int argc, char **argv);
 
 #endif
